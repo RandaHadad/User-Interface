@@ -14,6 +14,7 @@ import com.example.ui.R;
 import com.example.ui.adaptors.RecyleviewAdaptor;
 import com.example.ui.models.Logs_list;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class logs extends Fragment {
@@ -24,6 +25,13 @@ public class logs extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //make a new list of logs here
+
+        //Start of tests
+        logsLists= new ArrayList<>();
+        logsLists.add(new Logs_list("randa","hi there"));
+        logsLists.add(new Logs_list("randa","hi there"));
+        logsLists.add(new Logs_list("randa","hi there"));
+        //end of tests
     }
 
     @Override
