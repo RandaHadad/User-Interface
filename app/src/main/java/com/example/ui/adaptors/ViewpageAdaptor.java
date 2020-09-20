@@ -18,7 +18,6 @@ public class ViewpageAdaptor extends FragmentPagerAdapter {
 
     public ViewpageAdaptor( FragmentManager fm) {
         super(fm);
-
     }
 
     @Nullable
