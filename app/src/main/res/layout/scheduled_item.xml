@@ -28,6 +28,12 @@
             android:textColor="#9cada4"
             android:textSize="12pt"
             android:textStyle="bold"></TextView>
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
     </LinearLayout>
 
     <ImageButton
@@ -38,6 +44,17 @@
         android:layout_weight="1"
         android:background="#FFFFFF"
         app:srcCompat="@drawable/ic_baseline_delete_24"
+        tools:ignore="VectorDrawableCompat" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:tint="@android:color/holo_blue_dark"
+        app:srcCompat="@drawable/ic_baseline_edit_24"
         tools:ignore="VectorDrawableCompat" />
 
 

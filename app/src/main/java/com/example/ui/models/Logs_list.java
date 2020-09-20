@@ -4,7 +4,6 @@ public class Logs_list {
     String contactname;
     String sentmsg;
 
-    public Logs_list(){}
     public Logs_list(String contactname, String sentmsg) {
         this.contactname = contactname;
         this.sentmsg = sentmsg;
