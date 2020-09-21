@@ -24,15 +24,16 @@ public class Scheduled extends Fragment {
     RecyclerView myrecycleview;
     List<Scheduled_list> ScheduledLists;
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Start of tests
-        ScheduledLists= new ArrayList<>();
-        ScheduledLists.add(new Scheduled_list("randa","bbggdfgkk","889"));
-        ScheduledLists.add(new Scheduled_list("randa","bbrtegkk","889"));
-        ScheduledLists.add(new Scheduled_list("randa","bbgkrtek","889"));
+            ScheduledLists= new ArrayList<>();
+            ScheduledLists.add(new Scheduled_list("randa","bbrtegkk","889"));
+            ScheduledLists.add(new Scheduled_list("randa","bbgkrtek","889"));
         //end of tests
 
     }

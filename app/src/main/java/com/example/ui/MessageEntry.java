@@ -11,14 +11,18 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.ui.models.Scheduled_list;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MessageEntry extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
     TextView date;
+    TextView newmsg;
     FloatingActionButton calender;
-
+    FloatingActionButton save ;
     int day, month, year, hour, minute;
     int myday, myMonth, myYear, myHour, myMinute;
 
@@ -29,6 +33,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
         calender = findViewById(R.id.calender);
         date = findViewById(R.id.date);
+        newmsg= findViewById(R.id.massege);
 
 
         calender.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +47,13 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
                 datePickerDialog.show();
             }
         });
+//        save.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//            }
+//        });
 
 
     }

@@ -18,7 +18,7 @@
         android:layout_marginTop="100dp"
         android:background="@color/cardview_light_background"
         android:text="Date"
-        android:textSize="30sp"
+        android:textSize="12pt"
         app:drawableTint="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
@@ -37,7 +37,7 @@
         android:inputType="textMultiLine"
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintEnd_toStartOf="@+id/save"
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -76,7 +76,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:background="@color/colorAccent"
+        android:background="@color/cardview_light_background"
         android:ems="10"
         android:inputType="number"
         android:shadowColor="#DF0A0A"
@@ -86,7 +86,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
