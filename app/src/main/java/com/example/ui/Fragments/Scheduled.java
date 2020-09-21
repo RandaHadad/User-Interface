@@ -41,7 +41,7 @@ public class Scheduled extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_scheduled, container, false);
-        myrecycleview = v.findViewById(R.id.logs_recyclerlist);
+        myrecycleview = v.findViewById(R.id.scheduled_recyclerlist);
         ScheduledRecylviewAdaptor adaptor = new ScheduledRecylviewAdaptor(getContext(),ScheduledLists);
         //donot know this code have to search for it
         myrecycleview .setLayoutManager(new LinearLayoutManager(getActivity()));
