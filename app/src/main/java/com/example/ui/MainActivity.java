@@ -11,10 +11,11 @@ import android.widget.Button;
 import com.example.ui.Fragments.Scheduled;
 import com.example.ui.Fragments.logs;
 import com.example.ui.adaptors.ViewpageAdaptor;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
-    Button newmsg ;
+    FloatingActionButton newmsg ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

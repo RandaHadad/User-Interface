@@ -12,11 +12,13 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.Calendar;
 
 public class MessageEntry extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
-    TextView textView;
-    Button button;
+    TextView date;
+    FloatingActionButton calender;
     int day, month, year, hour, minute;
     int myday, myMonth, myYear, myHour, myMinute;
 
@@ -25,9 +27,9 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_entry);
 
-        button = findViewById(R.id.calender);
-        textView = findViewById(R.id.date);
-        button.setOnClickListener(new View.OnClickListener() {
+        calender = findViewById(R.id.calender);
+        date = findViewById(R.id.date);
+        calender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
@@ -54,10 +56,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         myHour = hourOfDay;
         myMinute = minute;
-        textView.setText("Year: " + myYear + "\n" +
-                "Month: " + myMonth + "\n" +
-                "Day: " + myday + "\n" +
-                "Hour: " + myHour + "\n" +
-                "Minute: " + myMinute);
+        date.setText( myYear + "/" + myMonth + "/" + myday + " " +
+               myHour + ":" + myMinute);
     }
 }
