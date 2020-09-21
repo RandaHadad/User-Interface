@@ -7,7 +7,6 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -19,6 +18,7 @@ import java.util.Calendar;
 public class MessageEntry extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
     TextView date;
     FloatingActionButton calender;
+
     int day, month, year, hour, minute;
     int myday, myMonth, myYear, myHour, myMinute;
 
@@ -29,6 +29,8 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
         calender = findViewById(R.id.calender);
         date = findViewById(R.id.date);
+
+
         calender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,6 +42,8 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
                 datePickerDialog.show();
             }
         });
+
+
     }
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
