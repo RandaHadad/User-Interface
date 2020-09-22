@@ -1,14 +1,19 @@
 package com.example.ui.adaptors;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ui.MainActivity;
+import com.example.ui.MessageEntry;
 import com.example.ui.R;
 import com.example.ui.models.Scheduled_list;
 
@@ -46,11 +51,13 @@ public class ScheduledRecylviewAdaptor extends RecyclerView.Adapter<ScheduledRec
         private TextView vh_name;
         private TextView vh_msg;
         private TextView vh_date;
+        private ImageButton vh_edit;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             vh_name= itemView.findViewById(R.id.Contact_name);
             vh_msg = itemView.findViewById(R.id.Logs_lastmsg);
             vh_date = itemView.findViewById(R.id.time);
+           vh_edit= itemView.findViewById(R.id.edit_msg);
         }
     }
 }

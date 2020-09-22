@@ -47,7 +47,7 @@ public class RecyleviewAdaptor extends RecyclerView.Adapter<RecyleviewAdaptor.My
                 TextView dialog_msg = clickmsgdialog.findViewById(R.id.dialog_sentmsg);
                 dialog_contactname.setText(mData.get(myholder.getAdapterPosition()).getContactname());
                 dialog_msg.setText(mData.get(myholder.getAdapterPosition()).getSentmsg());
-                Toast.makeText(mcontext, "clicked" + String.valueOf(myholder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
+
                 clickmsgdialog.show();
             }
         });
