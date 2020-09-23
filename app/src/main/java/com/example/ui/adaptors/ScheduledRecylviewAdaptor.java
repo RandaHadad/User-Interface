@@ -2,6 +2,7 @@ package com.example.ui.adaptors;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.ui.MessageEntry;
 import com.example.ui.R;
 import com.example.ui.models.Scheduled_list;
 import java.util.List;
@@ -28,19 +30,12 @@ public class ScheduledRecylviewAdaptor extends RecyclerView.Adapter<ScheduledRec
         View v = LayoutInflater.from(mcontext).inflate(R.layout.scheduled_item, parent, false);
         ScheduledRecylviewAdaptor.MyViewHolder myholder = new ScheduledRecylviewAdaptor.MyViewHolder(v);
 
-        clickmsgdialog = new Dialog(mcontext);
-        clickmsgdialog.setContentView(R.layout.activity_message_entry);
-
         myholder.vh_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TextView dialog_contactname = clickmsgdialog.findViewById(R.id.dialog_contactname);
-               // TextView dialog_msg = clickmsgdialog.findViewById(R.id.dialog_sentmsg);
-                clickmsgdialog.getWindow().setLayout(900 ,1500);
-                clickmsgdialog.show();
+                mcontext.startActivity(new Intent(mcontext, MessageEntry.class));
             }
         });
-
         return myholder;
     }
 
@@ -66,7 +61,7 @@ public class ScheduledRecylviewAdaptor extends RecyclerView.Adapter<ScheduledRec
             vh_name= itemView.findViewById(R.id.Contact_name);
             vh_msg = itemView.findViewById(R.id.Logs_lastmsg);
             vh_date = itemView.findViewById(R.id.time);
-           vh_edit= itemView.findViewById(R.id.edit_msg);
+            vh_edit= itemView.findViewById(R.id.edit_msg);
         }
     }
 }
