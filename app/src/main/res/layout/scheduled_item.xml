@@ -7,6 +7,7 @@
     android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
@@ -23,19 +24,21 @@
             android:textStyle="bold"></TextView>
 
         <TextView
-            android:id="@+id/Logs_lastmsg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Last massege"
-            android:textColor="#9cada4"
-            android:textSize="10pt"></TextView>
-
-        <TextView
             android:id="@+id/time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Date and time"
             android:textColor="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/Logs_lastmsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last massege"
+            android:textColor="#9cada4"
+            android:textSize="10pt"
+            android:visibility="gone"></TextView>
+
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

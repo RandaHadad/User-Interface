@@ -11,9 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ui.R;
-import com.example.ui.adaptors.RecyleviewAdaptor;
 import com.example.ui.adaptors.ScheduledRecylviewAdaptor;
-import com.example.ui.models.Logs_list;
 import com.example.ui.models.Scheduled_list;
 
 import java.util.ArrayList;
@@ -39,8 +37,7 @@ public class Scheduled extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_scheduled, container, false);
         myrecycleview = v.findViewById(R.id.scheduled_recyclerlist);
         ScheduledRecylviewAdaptor adaptor = new ScheduledRecylviewAdaptor(getContext(),ScheduledLists);

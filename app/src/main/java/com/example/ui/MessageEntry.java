@@ -72,7 +72,6 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         myHour = hourOfDay;
         myMinute = minute;
-        date.setText( myYear + "/" + myMonth + "/" + myday + " " +
-               myHour + ":" + myMinute);
+        date.setText( myYear + "/" + myMonth + "/" + myday + " " + myHour + ":" + myMinute);
     }
 }
