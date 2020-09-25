@@ -77,7 +77,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_ID)){
             //update
-            setTitle("Edit Word");
+            setTitle("Edit massege");
             editMode=true;
             mID=intent.getIntExtra(EXTRA_ID,-1);
 
@@ -87,7 +87,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
         }else {
             //insert
-            setTitle("Add new word");
+            setTitle("Add new massege");
             editMode=false;
 
         }
