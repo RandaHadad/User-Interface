@@ -1,9 +1,24 @@
 package com.example.ui.models;
 
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "Messagetable")
 public class Scheduled_list {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     String contactname;
-    String msg;
-    String time;
+    public String msg;
+    public String time;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Scheduled_list(String contactname, String msg, String time) {
         this.time = time;
@@ -23,16 +38,5 @@ public class Scheduled_list {
         return msg;
     }
 
-    public void settime(String time) {
-        this.time = time;
-    }
-
-    public void setContactname(String contactname) {
-        this.contactname = contactname;
-    }
-
-    public void setmsg(String msg) {
-        this.msg = msg;
-    }
 
 }

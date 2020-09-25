@@ -1,12 +1,12 @@
 package com.example.ui.adaptors;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +19,6 @@ public class ScheduledRecylviewAdaptor extends RecyclerView.Adapter<ScheduledRec
 
     Context mcontext;
     List<Scheduled_list> mData;
-    Dialog clickmsgdialog;
 
     public ScheduledRecylviewAdaptor(Context mcontext, List<Scheduled_list> mData) {
         this.mcontext = mcontext;
@@ -28,14 +27,20 @@ public class ScheduledRecylviewAdaptor extends RecyclerView.Adapter<ScheduledRec
 
     public ScheduledRecylviewAdaptor.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mcontext).inflate(R.layout.scheduled_item, parent, false);
-        ScheduledRecylviewAdaptor.MyViewHolder myholder = new ScheduledRecylviewAdaptor.MyViewHolder(v);
+        final ScheduledRecylviewAdaptor.MyViewHolder myholder = new ScheduledRecylviewAdaptor.MyViewHolder(v);
 
-        myholder.vh_edit.setOnClickListener(new View.OnClickListener() {
+        myholder.singlemsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mcontext.startActivity(new Intent(mcontext, MessageEntry.class));
+                Intent intent= new Intent(mcontext,MessageEntry.class);
+                intent.putExtra(MessageEntry.EXTRA_ID, mData.get(myholder.getAdapterPosition()).getId());
+                intent.putExtra(MessageEntry.EXTRA_TITLE, mData.get(myholder.getAdapterPosition()).getContactname());
+                intent.putExtra(MessageEntry.EXTRA_MESSAGE,mData.get(myholder.getAdapterPosition()).getmsg());
+
+                mcontext.startActivity(intent);
             }
-        });
+        } );
+
         return myholder;
     }
 
@@ -48,20 +53,29 @@ public class ScheduledRecylviewAdaptor extends RecyclerView.Adapter<ScheduledRec
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData!=null?mData.size():0;
+    }
+    public void setWord(List<Scheduled_list> list) {
+        this.mData=list;
+        notifyDataSetChanged();
     }
 
-    public static  class  MyViewHolder extends RecyclerView.ViewHolder{
+    public class  MyViewHolder extends RecyclerView.ViewHolder{
+        private LinearLayout singlemsg;
         private TextView vh_name;
         private TextView vh_msg;
         private TextView vh_date;
-        private ImageButton vh_edit;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             vh_name= itemView.findViewById(R.id.Contact_name);
             vh_msg = itemView.findViewById(R.id.Logs_lastmsg);
-            vh_date = itemView.findViewById(R.id.time);
-            vh_edit= itemView.findViewById(R.id.edit_msg);
+            vh_date = itemView.findViewById(R.id.date);
+            singlemsg= itemView.findViewById(R.id.scheduled_item);
+
         }
+    }
+
+    public Scheduled_list getInfoIndex(int pos){
+        return mData.get(pos);
     }
 }

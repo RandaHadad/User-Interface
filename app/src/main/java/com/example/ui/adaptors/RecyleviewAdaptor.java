@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ui.R;
 import com.example.ui.models.Logs_list;
+import com.example.ui.models.Scheduled_list;
 
 import java.util.List;
 
@@ -80,5 +80,9 @@ public class RecyleviewAdaptor extends RecyclerView.Adapter<RecyleviewAdaptor.My
             vh_sentmsg = itemView.findViewById(R.id.Logs_lastmsg);
             singlemsg = itemView.findViewById(R.id.logitem_layout);
         }
+    }
+
+    public Logs_list getInfoIndex(int pos){
+        return mData.get(pos);
     }
 }
