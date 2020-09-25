@@ -38,6 +38,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
     public static final String EXTRA_ID="com.example.myapp.extraid";
     public static final String EXTRA_TITLE="com.example.myapp.title";
     public static final String EXTRA_MESSAGE="com.example.myapp.message";
+    public static final String EXTRA_DATE="com.example.myapp.date";
 
     FloatingActionButton calender;
 
@@ -82,6 +83,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
             contactname.setText(intent.getStringExtra(EXTRA_TITLE));
             newmsg.setText(intent.getStringExtra(EXTRA_MESSAGE));
+            date.setText(intent.getStringExtra(EXTRA_DATE));
 
         }else {
             //insert
@@ -107,7 +109,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         myHour = hourOfDay;
         myMinute = minute;
-        date.setText( myYear + "/" + myMonth + "/" + myday + " " + myHour + ":" + myMinute);
+        date.setText( myday + "/" + myMonth + "/" + myYear + " " + myHour + ":" + myMinute);
     }
     //menu
     @Override
@@ -135,7 +137,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         String w1=newmsg.getText().toString().trim();
         String w2=date.getText().toString().trim();
 
-        Scheduled_list inf=new Scheduled_list(w,w2,w1);
+        Scheduled_list inf=new Scheduled_list(w,w1,w2);
         if (w.isEmpty() || w1.isEmpty() || w2.isEmpty() ){
             Toast.makeText(this, "Enter data", Toast.LENGTH_SHORT).show();
             return;

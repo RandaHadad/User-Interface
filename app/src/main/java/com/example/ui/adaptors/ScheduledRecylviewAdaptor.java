@@ -33,7 +33,7 @@ public class ScheduledRecylviewAdaptor extends RecyclerView.Adapter<ScheduledRec
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(mcontext,MessageEntry.class);
-                intent.putExtra(MessageEntry.EXTRA_ID, mData.get(myholder.getAdapterPosition()).getId());
+                    intent.putExtra(MessageEntry.EXTRA_ID, mData.get(myholder.getAdapterPosition()).getId());
                 intent.putExtra(MessageEntry.EXTRA_TITLE, mData.get(myholder.getAdapterPosition()).getContactname());
                 intent.putExtra(MessageEntry.EXTRA_MESSAGE,mData.get(myholder.getAdapterPosition()).getmsg());
 
