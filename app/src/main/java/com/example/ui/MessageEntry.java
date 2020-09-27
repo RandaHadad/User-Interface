@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
@@ -152,15 +153,17 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         String w1=newmsg.getText().toString().trim();
         String w2=date.getText().toString().trim();
 
+
         //make alarm
         Intent intent = new Intent(MessageEntry.this,AlarmReciever.class);
         intent.putExtra("notificationid",notificationid);
         intent.putExtra("massege",w1);
         intent.putExtra("phone",w);
+
         final PendingIntent pendingIntent = PendingIntent.getBroadcast(MessageEntry.this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP,alarmstart,pendingIntent);
-        Toast.makeText(MessageEntry.this ,"Done",Toast.LENGTH_SHORT).show();
+
 
         //save it in to db
         Scheduled_list inf=new Scheduled_list(w,w1,w2);
