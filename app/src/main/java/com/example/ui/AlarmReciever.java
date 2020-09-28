@@ -1,5 +1,6 @@
 package com.example.ui;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -25,12 +26,23 @@ public class AlarmReciever extends BroadcastReceiver {
         smsManager.sendTextMessage(num, null, msg, null, null);
 
 
-        String result = " massege has sent";
+        String result = " ";
         if (msg.isEmpty() || num.isEmpty()) {
             return;
         } else {
             switch (getResultCode()) {
-
+                case Activity.RESULT_OK:
+                    result = " massege has sent";
+                    NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+                    Notification.Builder builder = new Notification.Builder(context);
+                    builder.setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                            .setContentTitle("msg sent ")
+                            .setContentText(msg)
+                            .setWhen(System.currentTimeMillis())
+                            .setAutoCancel(true)
+                            .setContentIntent(contenetintent);
+                    notificationManager.notify(notificationid, builder.build());
+                    break;
                 case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
                     result = "Generic failure";
                     break;
@@ -43,16 +55,6 @@ public class AlarmReciever extends BroadcastReceiver {
                 case SmsManager.RESULT_ERROR_RADIO_OFF:
                     result = "Radio off";
                     break;
-                default:
-                    NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-                    Notification.Builder builder = new Notification.Builder(context);
-                    builder.setSmallIcon(R.drawable.ic_baseline_notifications_24)
-                            .setContentTitle("msg sent ")
-                            .setContentText(msg)
-                            .setWhen(System.currentTimeMillis())
-                            .setAutoCancel(true)
-                            .setContentIntent(contenetintent);
-                    notificationManager.notify(notificationid, builder.build());
             }
             Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
         }

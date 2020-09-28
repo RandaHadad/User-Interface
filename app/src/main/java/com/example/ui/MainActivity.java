@@ -11,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 
-
 import com.example.ui.Fragments.Scheduled;
 import com.example.ui.Fragments.logs;
 import com.example.ui.adaptors.ViewpageAdaptor;
