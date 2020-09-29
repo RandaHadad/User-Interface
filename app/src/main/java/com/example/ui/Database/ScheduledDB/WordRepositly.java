@@ -1,19 +1,20 @@
-package com.example.ui.Database.models;
+package com.example.ui.Database.ScheduledDB;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.ui.Database.WordRoomDb;
 import com.example.ui.models.Scheduled_list;
 
 import java.util.List;
 
 public class WordRepositly {
-    private Actions_on_db mWordActionsondb;
+    private DaoScheduled mWordActionsondb;
     private LiveData<List<Scheduled_list>> getAllWords;
     public WordRepositly (Application app){
-        WordRoomDb db=WordRoomDb.getInstance(app);
+        WordRoomDb db= WordRoomDb.getInstance(app);
         mWordActionsondb =db.dao();
         getAllWords = mWordActionsondb.getWord();
 
@@ -38,8 +39,8 @@ public class WordRepositly {
         new DeletAllWordAsynTask(mWordActionsondb).execute();
     }
     private static class InsertAsynTask extends AsyncTask<Scheduled_list,Void,Void>{
-        public Actions_on_db mWordDeo;
-        public  InsertAsynTask (Actions_on_db wordDeo){
+        public DaoScheduled mWordDeo;
+        public  InsertAsynTask (DaoScheduled wordDeo){
             mWordDeo=wordDeo;
         }
         @Override
@@ -49,8 +50,8 @@ public class WordRepositly {
         }
     }
     private static class DeleteAsynTask extends AsyncTask<Scheduled_list,Void,Void>{
-        public Actions_on_db mWordDeo;
-        public  DeleteAsynTask (Actions_on_db wordDeo){
+        public DaoScheduled mWordDeo;
+        public  DeleteAsynTask (DaoScheduled wordDeo){
             mWordDeo=wordDeo;
         }
         @Override
@@ -60,8 +61,8 @@ public class WordRepositly {
         }
     }
     private static class UpdateAsynTask extends AsyncTask<Scheduled_list,Void,Void>{
-        public Actions_on_db mWordDeo;
-        public  UpdateAsynTask (Actions_on_db wordDeo){
+        public DaoScheduled mWordDeo;
+        public  UpdateAsynTask (DaoScheduled wordDeo){
             mWordDeo=wordDeo;
         }
         @Override
@@ -71,8 +72,8 @@ public class WordRepositly {
         }
     }
     private static class DeletAllWordAsynTask extends AsyncTask<Void,Void,Void>{
-        public Actions_on_db mWordDeo;
-        public  DeletAllWordAsynTask (Actions_on_db wordDeo){
+        public DaoScheduled mWordDeo;
+        public  DeletAllWordAsynTask (DaoScheduled wordDeo){
             mWordDeo=wordDeo;
         }
 

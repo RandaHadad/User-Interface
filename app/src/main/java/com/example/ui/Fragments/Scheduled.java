@@ -1,5 +1,9 @@
 package com.example.ui.Fragments;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,8 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.example.ui.Database.models.WordViewModel;
+import com.example.ui.AlarmReciever;
+import com.example.ui.Database.ScheduledDB.WordViewModel;
 import com.example.ui.R;
 import com.example.ui.adaptors.ScheduledRecylviewAdaptor;
 import com.example.ui.models.Scheduled_list;
@@ -69,9 +75,18 @@ public class Scheduled extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                //delete item
+                //delete item from db
                 int adapterPosition = viewHolder.getAdapterPosition();
                 wordViewModel.delete(adaptor.getInfoIndex(adapterPosition));
+
+                //delete alarm to send msg
+                Intent intent = new Intent(getActivity(), AlarmReciever.class);
+                final PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(),0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+                final AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                alarmManager.cancel(pendingIntent);
+                pendingIntent.cancel();
+                Toast.makeText(getContext() ,"cencel",Toast.LENGTH_SHORT).show();
+
             }
         }).attachToRecyclerView(myrecycleview);
 

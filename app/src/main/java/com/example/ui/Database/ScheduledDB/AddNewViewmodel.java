@@ -1,4 +1,4 @@
-package com.example.ui.Database.models;
+package com.example.ui.Database.ScheduledDB;
 
 import android.app.Application;
 

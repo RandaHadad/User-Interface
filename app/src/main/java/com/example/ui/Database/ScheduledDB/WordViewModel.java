@@ -1,4 +1,4 @@
-package com.example.ui.Database.models;
+package com.example.ui.Database.ScheduledDB;
 
 import android.app.Application;
 
@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.ui.Database.ScheduledDB.WordRepositly;
 import com.example.ui.models.Scheduled_list;
 
 import java.util.List;

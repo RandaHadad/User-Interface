@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.Manifest;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
@@ -21,13 +20,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.ui.Database.models.AddNewViewmodel;
+import com.example.ui.Database.LogDB.AddNewViewmodelLog;
+import com.example.ui.Database.ScheduledDB.AddNewViewmodel;
 import com.example.ui.models.Scheduled_list;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
+
 import java.util.Calendar;
-import java.util.List;
+
 
 public class MessageEntry extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
     TextView date;
@@ -36,6 +36,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
     private int mID;
     private AddNewViewmodel addNewViewmodel;
+    private AddNewViewmodelLog addNewViewmodelLog;
     private boolean editMode;
 
     private final int notificationid = 1;
@@ -141,6 +142,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
             case R.id.itemsave:
                 //savedate
                 saveMassege();
+                setAlarm();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -152,18 +154,6 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         String w=contactname.getText().toString().trim();
         String w1=newmsg.getText().toString().trim();
         String w2=date.getText().toString().trim();
-
-
-        //make alarm
-        Intent intent = new Intent(MessageEntry.this,AlarmReciever.class);
-        intent.putExtra("notificationid",notificationid);
-        intent.putExtra("massege",w1);
-        intent.putExtra("phone",w);
-
-        final PendingIntent pendingIntent = PendingIntent.getBroadcast(MessageEntry.this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP,alarmstart,pendingIntent);
-
 
         //save it in to db
         Scheduled_list inf=new Scheduled_list(w,w1,w2);
@@ -179,6 +169,19 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
         }
         finish();
+    }
+
+    public void  setAlarm(){
+        //make alarm
+        Intent intent = new Intent(MessageEntry.this,AlarmReciever.class);
+        intent.putExtra("notificationid",notificationid);
+        intent.putExtra("massege",newmsg.getText().toString());
+        intent.putExtra("phone",contactname.getText().toString());
+
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(MessageEntry.this,mID,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP,alarmstart,pendingIntent);
+
     }
 
 }

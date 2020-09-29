@@ -35,6 +35,7 @@ public class ScheduledRecylviewAdaptor extends RecyclerView.Adapter<ScheduledRec
                 Intent intent= new Intent(mcontext,MessageEntry.class);
                 intent.putExtra(MessageEntry.EXTRA_ID, mData.get(myholder.getAdapterPosition()).getId());
                 intent.putExtra(MessageEntry.EXTRA_TITLE, mData.get(myholder.getAdapterPosition()).getContactname());
+                intent.putExtra(MessageEntry.EXTRA_DATE, mData.get(myholder.getAdapterPosition()).gettime());
                 intent.putExtra(MessageEntry.EXTRA_MESSAGE,mData.get(myholder.getAdapterPosition()).getmsg());
 
                 mcontext.startActivity(intent);
@@ -67,9 +68,9 @@ public class ScheduledRecylviewAdaptor extends RecyclerView.Adapter<ScheduledRec
         private TextView vh_date;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            vh_name= itemView.findViewById(R.id.Contact_name);
-            vh_msg = itemView.findViewById(R.id.Logs_lastmsg);
-            vh_date = itemView.findViewById(R.id.date);
+            vh_name= itemView.findViewById(R.id.Schedule_contactnameid);
+            vh_msg = itemView.findViewById(R.id.Schedule_massegeid);
+            vh_date = itemView.findViewById(R.id.Schedule_dateid);
             singlemsg= itemView.findViewById(R.id.scheduled_item);
 
         }

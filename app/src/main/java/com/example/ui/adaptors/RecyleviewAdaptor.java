@@ -69,6 +69,11 @@ public class RecyleviewAdaptor extends RecyclerView.Adapter<RecyleviewAdaptor.My
         return mData.size();
     }
 
+    public void setLog(List<Logs_list> words) {
+        this.mData=words;
+        notifyDataSetChanged();
+    }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout singlemsg;
         private TextView vh_name;

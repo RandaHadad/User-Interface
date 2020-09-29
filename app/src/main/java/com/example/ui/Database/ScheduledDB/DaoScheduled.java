@@ -1,4 +1,4 @@
-package com.example.ui.Database.models;
+package com.example.ui.Database.ScheduledDB;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Delete;
@@ -11,7 +11,7 @@ import com.example.ui.models.Scheduled_list;
 import java.util.List;
 
 @androidx.room.Dao
-public interface Actions_on_db {
+public interface DaoScheduled {
 
         @Insert
         void insert(Scheduled_list word);
