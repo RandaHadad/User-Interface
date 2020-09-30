@@ -30,6 +30,9 @@ public class Contactlist extends AppCompatActivity {
         Uri uri= ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
         phones = getContentResolver().query(uri,null,null,null,null);
 
+        ArrayAdapter<String> data=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,cont);
+        lv.setAdapter(data);
+
         getContacts();
 
 
@@ -44,7 +47,5 @@ public class Contactlist extends AppCompatActivity {
             cont.add(strName + ": " + strPhone);
         }
 
-        ArrayAdapter<String> data=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,cont);
-        lv.setAdapter(data);
     }
 }

@@ -80,6 +80,14 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 //            }
 //        });
 
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MessageEntry.this, GroupsActivity.class);
+                startActivityForResult(myIntent,1);
+            }
+        });
+
         addNewViewmodel= ViewModelProviders.of(this).get( AddNewViewmodel.class );
         setTitle("Add New Data");
 
@@ -117,7 +125,6 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
                 datePickerDialog.show();
             }
         });
-
 
     }
     @Override
