@@ -3,6 +3,7 @@ package com.example.ui;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -21,6 +22,7 @@ public class Contactlist extends AppCompatActivity {
 
     Cursor phones;
     ListView lv;
+    final int PICK_CONTACT = 1;
     List<String> cont =new ArrayList<String>();
 
     @Override
@@ -31,9 +33,10 @@ public class Contactlist extends AppCompatActivity {
         lv = findViewById(R.id.LV);
         Uri uri= ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
         phones = getContentResolver().query(uri,null,null,null,null);
+        final Intent phonenumber = new Intent(this, MessageEntry.class);
 
         final ArrayAdapter<String> data=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,cont);
-        final Intent iCont =new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+
         lv.setAdapter(data);
 
         getContacts();
@@ -41,22 +44,15 @@ public class Contactlist extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivityForResult(iCont,1);
+                 phones.moveToPosition(position);
+                 String number = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                 phonenumber.putExtra("phonenum",number);
+                 startActivity(phonenumber);
             }
         });
 
-
     }
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Uri uri= data.getData();
-        Cursor cursor = getContentResolver().query(uri,null ,null,null,null);
-        cursor.moveToFirst();
 
-        int phoneindex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-        String strNumber= cursor.getString(phoneindex);
-        data.putExtra("phonenumber",strNumber);
-    }
     protected void getContacts(){
         while (phones.moveToNext()){
             int phoneIndex=phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);

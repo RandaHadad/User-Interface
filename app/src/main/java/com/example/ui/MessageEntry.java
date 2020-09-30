@@ -37,7 +37,6 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
     private int mID;
     private AddNewViewmodel addNewViewmodel;
-    private AddNewViewmodelLog addNewViewmodelLog;
     private boolean editMode;
 
     private final int notificationid = 1;
@@ -71,6 +70,9 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         newmsg= findViewById(R.id.massege);
         contactname = findViewById(R.id.contact_msgentry);
 
+        Intent getnum = getIntent();
+        String number = getnum.getStringExtra("phonenum");
+
         // TODO activate groups button
 //        groups.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -85,10 +87,9 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
             public void onClick(View view) {
                 Intent myIntent = new Intent(MessageEntry.this, Contactlist.class);
                 startActivityForResult(myIntent,1);
-                contactname.setText(myIntent.getStringExtra("phonenumber"));
-
             }
         });
+        contactname.setText(number);
 
         addNewViewmodel= ViewModelProviders.of(this).get( AddNewViewmodel.class );
         setTitle("Add New Data");
