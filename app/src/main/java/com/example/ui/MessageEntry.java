@@ -68,7 +68,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         newmsg= findViewById(R.id.massege);
         contactname = findViewById(R.id.contact_msgentry);
 
-        // groups button
+        // TODO activate groups button
 //        groups.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -148,7 +148,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         this.item = item;
         switch (item.getItemId()){
-            case R.id.itemsave:
+            case R.id.newitem:
                 //savedate
                 saveMassege();
                 setAlarm();

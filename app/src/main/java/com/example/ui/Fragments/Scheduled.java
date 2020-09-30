@@ -32,8 +32,6 @@ public class Scheduled extends Fragment {
     List<Scheduled_list> ScheduledLists;
     ScheduledRecylviewAdaptor adaptor;
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +46,6 @@ public class Scheduled extends Fragment {
                 //-+Toast.makeText(MainActivity.this, "saved", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     @Override
