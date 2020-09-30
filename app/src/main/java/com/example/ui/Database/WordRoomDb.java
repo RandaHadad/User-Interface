@@ -12,7 +12,7 @@ import com.example.ui.Database.ScheduledDB.DaoScheduled;
 import com.example.ui.models.Logs_list;
 import com.example.ui.models.Scheduled_list;
 
-@Database(entities = {Scheduled_list.class, Logs_list.class}, version = 4)
+@Database(entities = {Scheduled_list.class, Logs_list.class}, version = 5)
 public abstract class WordRoomDb extends RoomDatabase {
     private static WordRoomDb instance;
 

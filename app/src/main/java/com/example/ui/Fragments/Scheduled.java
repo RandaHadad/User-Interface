@@ -50,7 +50,6 @@ public class Scheduled extends Fragment {
             }
         });
 
-
     }
 
     @Override
@@ -97,6 +96,6 @@ public class Scheduled extends Fragment {
         final AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
         pendingIntent.cancel();
-        Toast.makeText(getContext() ,"cencel",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext() ,"canceled",Toast.LENGTH_SHORT).show();
     }
 }

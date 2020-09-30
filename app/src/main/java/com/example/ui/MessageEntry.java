@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.ui.Database.LogDB.AddNewViewmodelLog;
 import com.example.ui.Database.ScheduledDB.AddNewViewmodel;
 import com.example.ui.models.Scheduled_list;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -86,6 +85,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(MessageEntry.this, Contactlist.class);
+                finish();
                 startActivityForResult(myIntent,1);
             }
         });
@@ -93,7 +93,6 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
         addNewViewmodel= ViewModelProviders.of(this).get( AddNewViewmodel.class );
         setTitle("Add New Data");
-
 
         // update && insert
         Intent intent = getIntent();
@@ -116,7 +115,6 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
         }
 
-
         calender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +123,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
                 month = c.get(Calendar.MONTH);
                 day = c.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MessageEntry.this, MessageEntry.this,year, month,day);
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 datePickerDialog.show();
             }
         });
@@ -136,11 +135,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         myday = dayOfMonth;
         myMonth = month;
         c.add(Calendar.DATE,0);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(MessageEntry.this,
-                MessageEntry.this,
-                hour,
-                minute,
-                DateFormat.is24HourFormat(this));
+        TimePickerDialog timePickerDialog = new TimePickerDialog(MessageEntry.this, MessageEntry.this, hour, minute, DateFormat.is24HourFormat(this));
         timePickerDialog.show();
     }
     @Override
@@ -151,11 +146,10 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MINUTE, minute);
         c.set(Calendar.HOUR, hourOfDay);
-
         c.set(Calendar.AM_PM, Calendar.AM);
-        c.set(myYear,myMonth,myday,myHour,myMinute);
+
         alarmstart = c.getTimeInMillis();
-        date.setText( myday + "/" + myMonth + 1 + "/" + myYear + " " + myHour + ":" + myMinute);
+        date.setText( myday + "/" + (myMonth + 1) + "/" + myYear + " " + myHour + ":" + myMinute);
     }
     //menu
     @Override
@@ -185,7 +179,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         String w2=date.getText().toString().trim();
 
         //save it in to db
-        Scheduled_list inf=new Scheduled_list(w,w1,w2,alarmstart);
+        Scheduled_list inf=new Scheduled_list(w,w1,w2);
         if (w.isEmpty() || w1.isEmpty() || w2.isEmpty() ){
             Toast.makeText(this, "Enter data", Toast.LENGTH_SHORT).show();
             return;
@@ -219,7 +213,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         final AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
         pendingIntent.cancel();
-        Toast.makeText(this ,"cencel",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this ,"canceled",Toast.LENGTH_SHORT).show();
 
     }
 

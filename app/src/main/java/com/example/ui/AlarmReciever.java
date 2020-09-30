@@ -51,13 +51,13 @@ public class AlarmReciever extends BroadcastReceiver {
                     result = "Radio off";
                     break;
                 case SmsManager.RESULT_CANCELLED:
-                    result = "Masssege Was Cancelled";
+                    result = "Massage Was Cancelled";
                     break;
                 default:
                     NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
                     Notification.Builder builder = new Notification.Builder(context);
                     builder.setSmallIcon(R.drawable.ic_baseline_notifications_24)
-                            .setContentTitle("msg sent ")
+                            .setContentTitle("Massage sent ")
                             .setContentText(msg)
                             .setWhen(System.currentTimeMillis())
                             .setAutoCancel(true)
@@ -66,6 +66,11 @@ public class AlarmReciever extends BroadcastReceiver {
 
             }
             Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+
+            // TODO transfer the data from scheduled to logs
+
+            // TODO delete the data from scheduled
+
         }
 
 

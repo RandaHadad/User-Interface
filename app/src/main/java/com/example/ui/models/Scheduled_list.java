@@ -11,22 +11,16 @@ public class Scheduled_list {
     String contactname;
      String msg;
      String time;
-     long milli;
 
-    public Scheduled_list(String contactname, String msg, String time , long milli) {
+    public Scheduled_list(String contactname, String msg, String time ) {
         this.contactname = contactname;
         this.msg = msg;
         this.time = time;
-
-        this.milli = milli;
     }
 
 
     public void setId(int id) {
         this.id = id;
-    }
-    public void setMilli(long milli) {
-        this.milli = milli;
     }
     public void setContactname(String contactname) {
         this.contactname = contactname;
@@ -41,9 +35,6 @@ public class Scheduled_list {
         this.time = time;
     }
 
-    public long getMilli() {
-        return milli;
-    }
     public int getId() {
         return id;
     }
