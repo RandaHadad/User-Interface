@@ -8,6 +8,7 @@ import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -19,8 +20,6 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import com.example.ui.Database.LogDB.AddNewViewmodelLog;
 import com.example.ui.Database.ScheduledDB.AddNewViewmodel;
 import com.example.ui.models.Scheduled_list;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,11 +35,9 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
     private int mID;
     private AddNewViewmodel addNewViewmodel;
-    private AddNewViewmodelLog addNewViewmodelLog;
     private boolean editMode;
 
     private final int notificationid = 1;
-    private final int sendmsgid = 2;
 
 
     public static final String EXTRA_ID="com.example.myapp.extraid";
@@ -49,9 +46,9 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
     public static final String EXTRA_DATE="com.example.myapp.date";
 
     FloatingActionButton calender;
+    FloatingActionButton contact;
 
     Calendar c ;
-
     int day, month, year, hour, minute;
     int myday, myMonth, myYear, myHour, myMinute;
     long alarmstart;
@@ -63,6 +60,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         setContentView(R.layout.activity_message_entry);
 
         calender = findViewById(R.id.calender);
+        contact= findViewById(R.id.btn_contact);
         date = findViewById(R.id.date);
         newmsg= findViewById(R.id.massege);
         contactname = findViewById(R.id.contact_msgentry);
@@ -77,18 +75,18 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         if (intent.hasExtra(EXTRA_ID)){
             //update
             setTitle("Edit massege");
-            editMode=true;
-            mID=intent.getIntExtra(EXTRA_ID,-1);
+            deletAlarm();
 
+            editMode=true;
+
+            mID=intent.getIntExtra(EXTRA_ID,-1);
             contactname.setText(intent.getStringExtra(EXTRA_TITLE));
             newmsg.setText(intent.getStringExtra(EXTRA_MESSAGE));
             date.setText(intent.getStringExtra(EXTRA_DATE));
-
         }else {
             //insert
             setTitle("Add new massege");
             editMode=false;
-
         }
 
 
@@ -111,8 +109,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         myYear = year;
         myday = dayOfMonth;
         myMonth = month;
-        hour = c.get(Calendar.HOUR);
-        minute = c.get(Calendar.MINUTE);
+        c.add(Calendar.DATE,0);
         TimePickerDialog timePickerDialog = new TimePickerDialog(MessageEntry.this,
                 MessageEntry.this,
                 hour,
@@ -124,6 +121,12 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         myHour = hourOfDay;
         myMinute = minute;
+
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MINUTE, minute);
+        c.set(Calendar.HOUR, hourOfDay);
+
+        c.set(Calendar.AM_PM, Calendar.AM);
         c.set(myYear,myMonth,myday,myHour,myMinute);
         alarmstart = c.getTimeInMillis();
         date.setText( myday + "/" + myMonth + "/" + myYear + " " + myHour + ":" + myMinute);
@@ -156,21 +159,21 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         String w2=date.getText().toString().trim();
 
         //save it in to db
-        Scheduled_list inf=new Scheduled_list(w,w1,w2);
-        if (w.isEmpty() || w1.isEmpty() || w2.isEmpty() ){
+        Scheduled_list inf=new Scheduled_list(w,w1,w2,alarmstart);
+        if ( w.isEmpty() || w1.isEmpty() || w2.isEmpty() ){
             Toast.makeText(this, "Enter data", Toast.LENGTH_SHORT).show();
             return;
         }
         if (editMode){
             inf.setId(mID);
             addNewViewmodel.update(inf);
-        }else {
-            addNewViewmodel.insert(inf);
 
+        }
+        else {
+            addNewViewmodel.insert(inf);
         }
         finish();
     }
-
     public void  setAlarm(){
         //make alarm
         Intent intent = new Intent(MessageEntry.this,AlarmReciever.class);
@@ -178,11 +181,23 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         intent.putExtra("massege",newmsg.getText().toString());
         intent.putExtra("phone",contactname.getText().toString());
 
-        final PendingIntent pendingIntent = PendingIntent.getBroadcast(MessageEntry.this,mID,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(MessageEntry.this, mID ,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP,alarmstart,pendingIntent);
 
+
     }
+    public void deletAlarm(){
+
+        Intent intent = new Intent(this, AlarmReciever.class);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(this,mID,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+        final AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+        pendingIntent.cancel();
+        Toast.makeText(this ,"cencel",Toast.LENGTH_SHORT).show();
+
+    }
+
 
 }
 

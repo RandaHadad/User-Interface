@@ -9,33 +9,63 @@ public class Scheduled_list {
     @PrimaryKey(autoGenerate = true)
     private int id;
     String contactname;
-    public String msg;
-    public String time;
+     String msg;
+     String time;
+     long milli;
 
-    public int getId() {
-        return id;
+    public Scheduled_list(String contactname, String msg, String time , long milli) {
+        this.contactname = contactname;
+        this.msg = msg;
+        this.time = time;
+
+        this.milli = milli;
     }
+
 
     public void setId(int id) {
         this.id = id;
     }
-
-    public Scheduled_list(String contactname, String msg, String time) {
-        this.time = time;
+    public void setMilli(long milli) {
+        this.milli = milli;
+    }
+    public void setContactname(String contactname) {
         this.contactname = contactname;
-        this.msg = msg;
     }
 
+
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public long getMilli() {
+        return milli;
+    }
+    public int getId() {
+        return id;
+    }
+    public String getTime() {
+        return time;
+    }
+    public String getMsg() {
+        return msg;
+    }
     public String gettime() {
         return time;
     }
-
     public String getContactname() {
         return contactname;
     }
-
     public String getmsg() {
         return msg;
+    }
+
+    @Override
+    public String toString() {
+        return getContactname() + " " + getmsg()  + " " + getTime();
     }
 
 

@@ -31,6 +31,7 @@ public class Scheduled extends Fragment {
     RecyclerView myrecycleview;
     List<Scheduled_list> ScheduledLists;
     ScheduledRecylviewAdaptor adaptor;
+    int mID;
 
 
 
@@ -80,17 +81,22 @@ public class Scheduled extends Fragment {
                 wordViewModel.delete(adaptor.getInfoIndex(adapterPosition));
 
                 //delete alarm to send msg
-                Intent intent = new Intent(getActivity(), AlarmReciever.class);
-                final PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(),0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
-                final AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-                alarmManager.cancel(pendingIntent);
-                pendingIntent.cancel();
-                Toast.makeText(getContext() ,"cencel",Toast.LENGTH_SHORT).show();
+                deletealarm(adapterPosition);
 
             }
         }).attachToRecyclerView(myrecycleview);
 
 
         return v ;
+    }
+    public void deletealarm( int i ){
+
+        Intent intent = new Intent(getActivity(), AlarmReciever.class);
+        mID = adaptor.getInfoIndex(i).getId();
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(),mID,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+        final AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+        pendingIntent.cancel();
+        Toast.makeText(getContext() ,"cencel",Toast.LENGTH_SHORT).show();
     }
 }

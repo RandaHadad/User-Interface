@@ -14,7 +14,6 @@ public class AlarmReciever extends BroadcastReceiver {
 
     private int mID;
 
-    public static final String EXTRA_ID="com.example.myapp.extraid";
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -22,10 +21,10 @@ public class AlarmReciever extends BroadcastReceiver {
         String msg = intent.getStringExtra("massege");
         String num = intent.getStringExtra("phone");
 
-        mID = intent.getIntExtra(EXTRA_ID,-1);
+        mID = intent.getIntExtra(MessageEntry.EXTRA_ID,-1);
 
         Intent mainintent = new Intent(context, MessageEntry.class);
-        final PendingIntent contenetintent = PendingIntent.getActivity(context, mID, mainintent, 0);
+        final PendingIntent contenetintent = PendingIntent.getActivity(context, mID, mainintent, PendingIntent.FLAG_ONE_SHOT);
 
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(num, null, msg, null, null);

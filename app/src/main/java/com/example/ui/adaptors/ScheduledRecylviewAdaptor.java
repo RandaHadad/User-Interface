@@ -23,6 +23,7 @@ public class ScheduledRecylviewAdaptor extends RecyclerView.Adapter<ScheduledRec
     public ScheduledRecylviewAdaptor(Context mcontext, List<Scheduled_list> mData) {
         this.mcontext = mcontext;
         this.mData = mData;
+
     }
 
     public ScheduledRecylviewAdaptor.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
