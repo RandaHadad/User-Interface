@@ -18,7 +18,7 @@ public class AlarmReciever extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        int notificationid = intent.getIntExtra("notificationid", 0);
+        int notificationid = intent.getIntExtra("notificationid", mID);
         String msg = intent.getStringExtra("massege");
         String num = intent.getStringExtra("phone");
 

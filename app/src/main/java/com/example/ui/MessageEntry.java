@@ -49,7 +49,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
     public static final String EXTRA_DATE="com.example.myapp.date";
 
     FloatingActionButton calender;
-
+    FloatingActionButton groups;
     Calendar c ;
 
     int day, month, year, hour, minute;
@@ -62,11 +62,20 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_entry);
 
+        groups=findViewById(R.id.groups);
         calender = findViewById(R.id.calender);
         date = findViewById(R.id.date);
         newmsg= findViewById(R.id.massege);
         contactname = findViewById(R.id.contact_msgentry);
 
+        // groups button
+//        groups.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent myIntent = new Intent(MessageEntry.this, GroupsActivity.class);
+//                startActivityForResult(myIntent,1);
+//            }
+//        });
 
         addNewViewmodel= ViewModelProviders.of(this).get( AddNewViewmodel.class );
         setTitle("Add New Data");
@@ -126,7 +135,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         myMinute = minute;
         c.set(myYear,myMonth,myday,myHour,myMinute);
         alarmstart = c.getTimeInMillis();
-        date.setText( myday + "/" + myMonth + "/" + myYear + " " + myHour + ":" + myMinute);
+        date.setText( myday + "/" + myMonth + 1 + "/" + myYear + " " + myHour + ":" + myMinute);
     }
     //menu
     @Override
