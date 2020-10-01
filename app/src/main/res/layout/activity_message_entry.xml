@@ -7,7 +7,7 @@
     android:background="@color/cardview_light_background"
     android:focusable="auto"
     android:orientation="vertical"
-    tools:context=".MessageEntry">
+    tools:context=".Activity.MessageEntry">
 
     <TextView
         android:id="@+id/date"

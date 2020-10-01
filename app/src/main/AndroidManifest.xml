@@ -14,9 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Contactlist"></activity>
+        <activity android:name=".Activity.Contactlist"></activity>
         <activity
-            android:name=".MessageEntry"
+            android:name=".Activity.MessageEntry"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

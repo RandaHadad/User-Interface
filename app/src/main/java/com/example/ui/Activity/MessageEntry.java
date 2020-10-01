@@ -1,4 +1,4 @@
-package com.example.ui;
+package com.example.ui.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,12 +21,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.ui.AlarmReciever;
 import com.example.ui.Database.ScheduledDB.AddNewViewmodel;
+import com.example.ui.R;
 import com.example.ui.models.Scheduled_list;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
-import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -94,7 +95,6 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
             }
         });
         contactname.setText(number);
-
 
 
         // update && insert
@@ -182,7 +182,6 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
         }
     }
-
     private void saveMassege() {
         String w=contactname.getText().toString().trim();
         String w1=newmsg.getText().toString().trim();
@@ -202,15 +201,14 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         }
         finish();
     }
-
     public void  setAlarm(){
         //make alarm
-        Intent intent = new Intent(MessageEntry.this,AlarmReciever.class);
+        Intent intent = new Intent(MessageEntry.this, AlarmReciever.class);
         intent.putExtra("notificationid",notificationid);
         intent.putExtra("massege",newmsg.getText().toString());
         intent.putExtra("phone",contactname.getText().toString());
 
-        final PendingIntent pendingIntent = PendingIntent.getBroadcast(MessageEntry.this, mID ,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(MessageEntry.this, mID ,intent,PendingIntent.FLAG_IMMUTABLE);
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP,alarmstart,pendingIntent);
 

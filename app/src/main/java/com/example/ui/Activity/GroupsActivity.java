@@ -1,4 +1,4 @@
-package com.example.ui;
+package com.example.ui.Activity;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,6 +7,8 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ui.R;
 
 public class GroupsActivity extends AppCompatActivity {
 

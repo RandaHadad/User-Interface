@@ -5,11 +5,13 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.telephony.SmsManager;
 import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.ui.Activity.MessageEntry;
 import com.example.ui.Database.LogDB.AddNewViewmodelLog;
 
 
@@ -29,7 +31,6 @@ public class AlarmReciever extends BroadcastReceiver {
         String msg = intent.getStringExtra("massege");
         String num = intent.getStringExtra("phone");
 
-       // addNewViewmodellog= ViewModelProviders.of(getViewLifecycleOwner()).get( AddNewViewmodelLog.class );
         mID = intent.getIntExtra(MessageEntry.EXTRA_ID,-1);
         contact = intent.getStringExtra(MessageEntry.EXTRA_TITLE);
         massege = intent.getStringExtra(MessageEntry.EXTRA_MESSAGE);
@@ -37,14 +38,11 @@ public class AlarmReciever extends BroadcastReceiver {
         Intent mainintent = new Intent(context, MessageEntry.class);
         final PendingIntent contenetintent = PendingIntent.getActivity(context, mID, mainintent, PendingIntent.	FLAG_IMMUTABLE);
 
-        SmsManager smsManager = SmsManager.getDefault();
-        smsManager.sendTextMessage(num, null, msg, null, null);
-
-
-        String result = "massege has sent";
+        String result = "Check your scheduled massege";
         if (msg.isEmpty() || num.isEmpty()) {
             return;
-        } else {
+        }
+        else {
             switch (getResultCode()) {
                 case Activity.RESULT_OK:
                     result = " massege has sent";
@@ -65,8 +63,11 @@ public class AlarmReciever extends BroadcastReceiver {
                     result = "Massage Was Cancelled";
                     break;
 
-
             }
+
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(num, null, msg, null, null);
+
             Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"channelid")
                     .setSmallIcon(R.drawable.ic_baseline_notifications_24)
