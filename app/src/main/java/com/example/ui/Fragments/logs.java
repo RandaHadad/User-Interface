@@ -34,10 +34,10 @@ public class logs extends Fragment {
         //make a new list of logs here
 
         //Start of tests
-        logsLists= new ArrayList<>();
-        logsLists.add(new Logs_list("randa","hi there"));
-        logsLists.add(new Logs_list("randa","hi there"));
-        logsLists.add(new Logs_list("randa","hi there"));
+//        logsLists= new ArrayList<>();
+//        logsLists.add(new Logs_list("randa","hi there"));
+//        logsLists.add(new Logs_list("randa","hi there"));
+//        logsLists.add(new Logs_list("randa","hi there"));
         //end of tests
         logViewModel= ViewModelProviders.of(this).get(LogViewModel.class);
         logViewModel.getAllWord().observe(this, new Observer<List<Logs_list>>() {

@@ -1,9 +1,12 @@
 package com.example.ui.models;
 
+import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.util.List;
 
+
+@Entity(tableName = "grouptable")
 public class Groups_List {
     @PrimaryKey(autoGenerate = true)
     int id;

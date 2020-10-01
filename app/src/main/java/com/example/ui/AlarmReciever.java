@@ -35,6 +35,8 @@ public class AlarmReciever extends BroadcastReceiver {
         contact = intent.getStringExtra(MessageEntry.EXTRA_TITLE);
         massege = intent.getStringExtra(MessageEntry.EXTRA_MESSAGE);
 
+
+
         Intent mainintent = new Intent(context, MessageEntry.class);
         final PendingIntent contenetintent = PendingIntent.getActivity(context, mID, mainintent, PendingIntent.	FLAG_IMMUTABLE);
 
@@ -79,12 +81,13 @@ public class AlarmReciever extends BroadcastReceiver {
             notificationManager.notify(notificationid, builder.build());
 
             // TODO transfer the data from scheduled to logs
-//            Logs_list Done = new Logs_list(contact,massege);
-//            addNewViewmodellog.insert(Done);
+            // addNewViewmodellog= ViewModelProviders.of(activity).get( AddNewViewmodelLog.class );
+
+         //            Logs_list Done = new Logs_list(contact,massege);
+         //            addNewViewmodellog.insert(Done);
             // TODO delete the data from scheduled
 
         }
-
 
     }
 

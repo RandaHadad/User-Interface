@@ -167,10 +167,10 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         Date date = new Date();
         long timeMilli = date.getTime();
         switch (item.getItemId()){
-            case R.id.newitem:
+            case R.id.newgroup:
                 //savedate
                 if(timeMilli >= alarmstart){
-                    Toast.makeText(this, "invalid date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "invalid time", Toast.LENGTH_SHORT).show();
                 }else {
                 saveMassege();
                 setAlarm();

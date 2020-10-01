@@ -1,6 +1,8 @@
 package com.example.ui.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,8 +32,10 @@ public class GroupsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         this.item = item;
         switch (item.getItemId()){
-            case R.id.newitem:
+            case R.id.newgroup:
                 //TODO create new group
+                Intent intent = new Intent(GroupsActivity.this,ContactsContract.class);
+
 
                 return true;
             default:
