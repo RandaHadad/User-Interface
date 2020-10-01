@@ -8,7 +8,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.ui.Database.Groupdb.GroupDao;
+//import com.example.ui.Database.Groupdb.GroupDao;
 import com.example.ui.Database.LogDB.DaoLog;
 import com.example.ui.Database.ScheduledDB.DaoScheduled;
 import com.example.ui.models.Logs_list;
@@ -20,7 +20,7 @@ public abstract class WordRoomDb extends RoomDatabase {
 
     public abstract DaoScheduled dao();
     public abstract DaoLog daoLog();
-    public abstract GroupDao groupDao();
+//    public abstract GroupDao groupDao();
 
     public static synchronized WordRoomDb getInstance(Context context){
         if (instance==null){
@@ -46,11 +46,11 @@ public abstract class WordRoomDb extends RoomDatabase {
     private static class PopulateDataAsyntask extends AsyncTask<Void ,Void,Void>{
         private DaoScheduled mWordActionsondb;
         private DaoLog mLogActiondb;
-        private GroupDao mGroupActiondb;
+//        private GroupDao mGroupActiondb;
         PopulateDataAsyntask(WordRoomDb db){
             mWordActionsondb =db.dao();
             mLogActiondb=db.daoLog();
-            mGroupActiondb=db.groupDao();
+//            mGroupActiondb=db.groupDao();
         }
         @Override
         protected Void doInBackground(Void... voids) {

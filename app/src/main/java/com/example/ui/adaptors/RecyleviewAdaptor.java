@@ -66,7 +66,7 @@ public class RecyleviewAdaptor extends RecyclerView.Adapter<RecyleviewAdaptor.My
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData!=null?mData.size():0;
     }
 
     public void setLog(List<Logs_list> words) {
