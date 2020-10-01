@@ -9,6 +9,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         requestContactPermission();
+        createNotificationchannel();
 
         //add fragment
         viewpageAdaptor.addfragment(new logs(),"Sent");
@@ -95,6 +98,21 @@ public class MainActivity extends AppCompatActivity {
                             PERMISSIONS_REQUEST_READ_CONTACTS);
                 }
             }
+        }
+    }
+    public  void createNotificationchannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "Reminderchannel";
+            String description = "Channel";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("channelid",name,importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+
+
+
         }
     }
 

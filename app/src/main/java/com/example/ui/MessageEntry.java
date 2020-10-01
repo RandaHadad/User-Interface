@@ -26,7 +26,9 @@ import com.example.ui.models.Scheduled_list;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
+import java.sql.Time;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class MessageEntry extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
@@ -40,7 +42,6 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
     private final int notificationid = 1;
     private final int sendmsgid = 2;
-
 
     public static final String EXTRA_ID="com.example.myapp.extraid";
     public static final String EXTRA_TITLE="com.example.myapp.title";
@@ -69,8 +70,11 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         newmsg= findViewById(R.id.massege);
         contactname = findViewById(R.id.contact_msgentry);
 
-        Intent getnum = getIntent();
-        String number = getnum.getStringExtra("phonenum");
+        addNewViewmodel= ViewModelProviders.of(this).get( AddNewViewmodel.class );
+        setTitle("Add New Data");
+
+
+
 
         // TODO activate groups button
 //        groups.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +85,8 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 //            }
 //        });
 
+        Intent getnum = getIntent();
+        String number = getnum.getStringExtra("phonenum");
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,8 +97,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         });
         contactname.setText(number);
 
-        addNewViewmodel= ViewModelProviders.of(this).get( AddNewViewmodel.class );
-        setTitle("Add New Data");
+
 
         // update && insert
         Intent intent = getIntent();
@@ -161,12 +166,19 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         this.item = item;
+        Date date = new Date();
+        long timeMilli = date.getTime();
         switch (item.getItemId()){
             case R.id.newitem:
                 //savedate
+                if(timeMilli >= alarmstart){
+                    Toast.makeText(this, "invalid date", Toast.LENGTH_SHORT).show();
+                }else {
                 saveMassege();
                 setAlarm();
                 return true;
+                }
+
             default:
                 return super.onOptionsItemSelected(item);
 
@@ -177,7 +189,6 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         String w=contactname.getText().toString().trim();
         String w1=newmsg.getText().toString().trim();
         String w2=date.getText().toString().trim();
-
         //save it in to db
         Scheduled_list inf=new Scheduled_list(w,w1,w2);
         if (w.isEmpty() || w1.isEmpty() || w2.isEmpty() ){

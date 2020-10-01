@@ -55,7 +55,7 @@ public class Contactlist extends AppCompatActivity {
             int nameIndex=phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
             String strPhone=phones.getString(phoneIndex);
             String strName=phones.getString(nameIndex);
-            cont.add(strName + ": " + strPhone);
+            cont.add(strName + ":  " + strPhone);
         }
     }
 
