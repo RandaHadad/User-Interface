@@ -74,8 +74,6 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         setTitle("Add New Data");
 
 
-
-
         // TODO activate groups button
 //        groups.setOnClickListener(new View.OnClickListener() {
 //            @Override
