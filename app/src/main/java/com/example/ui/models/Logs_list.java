@@ -3,6 +3,9 @@ package com.example.ui.models;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+
+
+
 @Entity(tableName = "logtable")
 public class Logs_list {
     @PrimaryKey(autoGenerate = true)

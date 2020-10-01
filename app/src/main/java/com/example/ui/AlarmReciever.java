@@ -10,6 +10,7 @@ import android.telephony.SmsManager;
 import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.ui.Activity.MessageEntry;
 import com.example.ui.Database.LogDB.AddNewViewmodelLog;
@@ -21,13 +22,16 @@ public class AlarmReciever extends BroadcastReceiver {
     String contact;
     String massege;
 
-    private AddNewViewmodelLog addNewViewmodellog;
+    BroadcastReceiver smsSentReceiver;
+    PendingIntent sentPI;
+    String SENT="SMS_SENT";
 
+    private AddNewViewmodelLog addNewViewmodellog;
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        int notificationid = intent.getIntExtra("notificationid", mID);
+        int notificationid = intent.getIntExtra("notificationid", 1);
         String msg = intent.getStringExtra("massege");
         String num = intent.getStringExtra("phone");
 
@@ -35,60 +39,57 @@ public class AlarmReciever extends BroadcastReceiver {
         contact = intent.getStringExtra(MessageEntry.EXTRA_TITLE);
         massege = intent.getStringExtra(MessageEntry.EXTRA_MESSAGE);
 
-
-
-        Intent mainintent = new Intent(context, MessageEntry.class);
-        final PendingIntent contenetintent = PendingIntent.getActivity(context, mID, mainintent, PendingIntent.	FLAG_IMMUTABLE);
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage( num, null, msg, sentPI, null);
 
         String result = "Check your scheduled massege";
         if (msg.isEmpty() || num.isEmpty()) {
             return;
         }
         else {
-            switch (getResultCode()) {
-                case Activity.RESULT_OK:
-                    result = " massege has sent";
-                    break;
-                case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                    result = "Generic failure";
-                    break;
-                case SmsManager.RESULT_ERROR_NO_SERVICE:
-                    result = "No service";
-                    break;
-                case SmsManager.RESULT_ERROR_NULL_PDU:
-                    result = "Null PDU";
-                    break;
-                case SmsManager.RESULT_ERROR_RADIO_OFF:
-                    result = "Radio off";
-                    break;
-                case SmsManager.RESULT_CANCELLED:
-                    result = "Massage Was Cancelled";
-                    break;
+            smsSentReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                switch (getResultCode()) {
+                    case Activity.RESULT_OK:
+                        Toast.makeText(context, "SMS sent", Toast.LENGTH_SHORT).show();
+                        // sendSMS(null);
+                        break;
+                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+                        Toast.makeText(context, "Generic Failure", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_NO_SERVICE:
+                        Toast.makeText(context, "No Service", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_NULL_PDU:
+                        Toast.makeText(context, "Null PDU", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_RADIO_OFF:
+                        Toast.makeText(context, "Radio off", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }};
+            context.registerReceiver(smsSentReceiver,new IntentFilter(SENT));
+        }
 
-            }
-
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(num, null, msg, null, null);
-
-            Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"channelid")
-                    .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-                    .setContentTitle(result)
-                    .setContentText(msg)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-            NotificationManagerCompat notificationManager =NotificationManagerCompat.from(context);
-            notificationManager.notify(notificationid, builder.build());
+//            Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+//            NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"channelid")
+//                    .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+//                    .setContentTitle(result)
+//                    .setContentText(msg)
+//                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//
+//            NotificationManagerCompat notificationManager =NotificationManagerCompat.from(context);
+//            notificationManager.notify(notificationid, builder.build());
 
             // TODO transfer the data from scheduled to logs
-            // addNewViewmodellog= ViewModelProviders.of(activity).get( AddNewViewmodelLog.class );
-
-         //            Logs_list Done = new Logs_list(contact,massege);
-         //            addNewViewmodellog.insert(Done);
+            //addNewViewmodellog= ViewModelProviders.of(activity).get( AddNewViewmodelLog.class );
+            //            Logs_list Done = new Logs_list(contact,massege);
+            //            addNewViewmodellog.insert(Done);
             // TODO delete the data from scheduled
 
         }
 
+
     }
 
-}
