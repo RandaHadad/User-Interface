@@ -28,10 +28,11 @@ public class AlarmReciever extends BroadcastReceiver {
 
     private AddNewViewmodelLog addNewViewmodellog;
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        int notificationid = intent.getIntExtra("notificationid", 1);
+        int notificationid = intent.getIntExtra("notificationid", mID);
         String msg = intent.getStringExtra("massege");
         String num = intent.getStringExtra("phone");
 
@@ -39,8 +40,13 @@ public class AlarmReciever extends BroadcastReceiver {
         contact = intent.getStringExtra(MessageEntry.EXTRA_TITLE);
         massege = intent.getStringExtra(MessageEntry.EXTRA_MESSAGE);
 
+        Intent mainintent = new Intent(context, MessageEntry.class);
+        final PendingIntent contenetintent = PendingIntent.getActivity(context, mID, mainintent, PendingIntent.FLAG_NO_CREATE);
+        sentPI=PendingIntent.getBroadcast(context,0,new Intent(SENT),0);
+
+
         SmsManager smsManager = SmsManager.getDefault();
-        smsManager.sendTextMessage( num, null, msg, sentPI, null);
+        smsManager.sendTextMessage(num, null, msg, null, null);
 
         String result = "Check your scheduled massege";
         if (msg.isEmpty() || num.isEmpty()) {
@@ -48,48 +54,48 @@ public class AlarmReciever extends BroadcastReceiver {
         }
         else {
             smsSentReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                switch (getResultCode()) {
-                    case Activity.RESULT_OK:
-                        Toast.makeText(context, "SMS sent", Toast.LENGTH_SHORT).show();
-                        // sendSMS(null);
-                        break;
-                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        Toast.makeText(context, "Generic Failure", Toast.LENGTH_SHORT).show();
-                        break;
-                    case SmsManager.RESULT_ERROR_NO_SERVICE:
-                        Toast.makeText(context, "No Service", Toast.LENGTH_SHORT).show();
-                        break;
-                    case SmsManager.RESULT_ERROR_NULL_PDU:
-                        Toast.makeText(context, "Null PDU", Toast.LENGTH_SHORT).show();
-                        break;
-                    case SmsManager.RESULT_ERROR_RADIO_OFF:
-                        Toast.makeText(context, "Radio off", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }};
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    switch (getResultCode()) {
+                        case Activity.RESULT_OK:
+                            Toast.makeText(context, "SMS sent", Toast.LENGTH_SHORT).show();
+                            // sendSMS(null);
+                            break;
+                        case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+                            Toast.makeText(context, "Generic Failure", Toast.LENGTH_SHORT).show();
+                            break;
+                        case SmsManager.RESULT_ERROR_NO_SERVICE:
+                            Toast.makeText(context, "No Service", Toast.LENGTH_SHORT).show();
+                            break;
+                        case SmsManager.RESULT_ERROR_NULL_PDU:
+                            Toast.makeText(context, "Null PDU", Toast.LENGTH_SHORT).show();
+                            break;
+                        case SmsManager.RESULT_ERROR_RADIO_OFF:
+                            Toast.makeText(context, "Radio off", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                }};
             context.registerReceiver(smsSentReceiver,new IntentFilter(SENT));
         }
 
-//            Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
-//            NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"channelid")
-//                    .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-//                    .setContentTitle(result)
-//                    .setContentText(msg)
-//                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//
-//            NotificationManagerCompat notificationManager =NotificationManagerCompat.from(context);
-//            notificationManager.notify(notificationid, builder.build());
+        Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"channelid")
+                    .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                    .setContentTitle(result)
+                    .setContentText(msg)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+            NotificationManagerCompat notificationManager =NotificationManagerCompat.from(context);
+            notificationManager.notify(notificationid, builder.build());
 
             // TODO transfer the data from scheduled to logs
-            //addNewViewmodellog= ViewModelProviders.of(activity).get( AddNewViewmodelLog.class );
+            // addNewViewmodellog= ViewModelProviders.of(contenetintent).get( AddNewViewmodelLog.class );
+
             //            Logs_list Done = new Logs_list(contact,massege);
             //            addNewViewmodellog.insert(Done);
             // TODO delete the data from scheduled
 
         }
-
 
     }
 
