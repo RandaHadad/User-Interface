@@ -208,7 +208,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         intent.putExtra("massege",newmsg.getText().toString());
         intent.putExtra("phone",contactname.getText().toString());
 
-        final PendingIntent pendingIntent = PendingIntent.getBroadcast(MessageEntry.this, mID ,intent,PendingIntent.FLAG_NO_CREATE);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(MessageEntry.this, mID ,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP,alarmstart,pendingIntent);
 

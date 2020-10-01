@@ -27,7 +27,7 @@ public class AlarmReciever extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        int notificationid = intent.getIntExtra("notificationid", mID);
+        int notificationid = intent.getIntExtra("notificationid", 1);
         String msg = intent.getStringExtra("massege");
         String num = intent.getStringExtra("phone");
 
@@ -35,11 +35,12 @@ public class AlarmReciever extends BroadcastReceiver {
         contact = intent.getStringExtra(MessageEntry.EXTRA_TITLE);
         massege = intent.getStringExtra(MessageEntry.EXTRA_MESSAGE);
 
+        Intent mainintent = new Intent(context, MessageEntry.class);
+        final PendingIntent contenetintent = PendingIntent.getActivity(context, mID, mainintent, PendingIntent.	FLAG_IMMUTABLE);
+
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(num, null, msg, null, null);
 
-        Intent mainintent = new Intent(context, MessageEntry.class);
-        final PendingIntent contenetintent = PendingIntent.getActivity(context, mID, mainintent, PendingIntent.	FLAG_IMMUTABLE);
 
         String result = "Check your scheduled massege";
         if (msg.isEmpty() || num.isEmpty()) {
@@ -67,12 +68,12 @@ public class AlarmReciever extends BroadcastReceiver {
                     break;
 
             }
-
             Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"channelid")
                     .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                     .setContentTitle(result)
                     .setContentText(msg)
+                    .setContentIntent(contenetintent)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
             NotificationManagerCompat notificationManager =NotificationManagerCompat.from(context);
