@@ -14,11 +14,6 @@ public class Logs_list {
     String sentmsg;
     public String time;
 
-//    public Logs_list(String contactname, String sentmsg, String time) {
-//        this.contactname = contactname;
-//        this.sentmsg = sentmsg;
-//        this.time = time;
-//    }
 
     public Logs_list(String contactname, String sentmsg) {
         this.contactname = contactname;

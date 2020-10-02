@@ -1,17 +1,16 @@
 package com.example.ui.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,18 +20,33 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.ui.AlarmReciever;
 import com.example.ui.Database.ScheduledDB.AddNewViewmodel;
 import com.example.ui.R;
 import com.example.ui.models.Scheduled_list;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.wafflecopter.multicontactpicker.ContactResult;
+import com.wafflecopter.multicontactpicker.LimitColumn;
+import com.wafflecopter.multicontactpicker.MultiContactPicker;
 
-
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
 
 public class MessageEntry extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+    private static final int CONTACT_PICKER_REQUEST = 202 ;
+    List<ContactResult> results = new ArrayList<>();
     TextView date;
     TextView newmsg;
     TextView contactname;
@@ -43,6 +57,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
     private final int notificationid = 1;
     private final int sendmsgid = 2;
+
 
     public static final String EXTRA_ID="com.example.myapp.extraid";
     public static final String EXTRA_TITLE="com.example.myapp.title";
@@ -71,31 +86,64 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         newmsg= findViewById(R.id.massege);
         contactname = findViewById(R.id.contact_msgentry);
 
-        addNewViewmodel= ViewModelProviders.of(this).get( AddNewViewmodel.class );
-        setTitle("Add New Data");
-
-
-        // TODO activate groups button
-//        groups.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent myIntent = new Intent(MessageEntry.this, GroupsActivity.class);
-//                startActivityForResult(myIntent,1);
-//            }
-//        });
-
         Intent getnum = getIntent();
         String number = getnum.getStringExtra("phonenum");
+
+        // TODO activate groups button
+/*
+        groups.setOnClickListener(new View.OnClickListener() {
+           @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MessageEntry.this, GroupsActivity.class);
+                startActivityForResult(myIntent,1);
+            }
+        });*/
+
+
+        Dexter.withContext(this)
+                .withPermissions(
+                        Manifest.permission.SEND_SMS,
+                        Manifest.permission.READ_CONTACTS
+
+                ).withListener(new MultiplePermissionsListener() {
+            @Override public void onPermissionsChecked(MultiplePermissionsReport report) {/* ... */}
+            @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
+        }).check();
+
+        groups.setOnClickListener(new View.OnClickListener( ) {
+            @Override
+            public void onClick(View view) {
+                new MultiContactPicker.Builder(MessageEntry.this) //Activity/fragment context
+                        .hideScrollbar(false)
+                        .showTrack(true)
+                        .searchIconColor(Color.WHITE)
+                        .setChoiceMode(MultiContactPicker.CHOICE_MODE_MULTIPLE)
+                        .handleColor(ContextCompat.getColor(MessageEntry.this, R.color.colorPrimary))
+                        .bubbleColor(ContextCompat.getColor(MessageEntry.this, R.color.colorPrimary))
+                        .setTitleText("Select Contacts")
+                        .setLoadingType(MultiContactPicker.LOAD_ASYNC)
+                        .limitToColumn(LimitColumn.NONE)
+                        .setActivityAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
+                                android.R.anim.fade_in,
+                                android.R.anim.fade_out)
+                        .showPickerForResult(CONTACT_PICKER_REQUEST);
+            }
+        });
+
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(MessageEntry.this, Contactlist.class);
-                finish();
+                  finish();
                 startActivityForResult(myIntent,1);
             }
         });
+
+
         contactname.setText(number);
 
+        addNewViewmodel= ViewModelProviders.of(this).get( AddNewViewmodel.class );
+        setTitle("Add New Data");
 
         // update && insert
         Intent intent = getIntent();
@@ -133,6 +181,25 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
     }
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CONTACT_PICKER_REQUEST){
+            if(resultCode == RESULT_OK) {
+                results = MultiContactPicker.obtainResult(data);
+                String names = results.get(0).getDisplayName();
+                for(int j = 0 ; j<results.size() ; j++){
+                    if( j != 0)
+                        names = names+", "+results.get(j).getDisplayName();
+                }
+                contactname.setText(names);
+
+                Log.d("MyTag", results.get(0).getDisplayName());
+            } else if(resultCode == RESULT_CANCELED){
+                System.out.println("User closed the picker without selecting items.");
+            }
+        }
+    }
+    @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         myYear = year;
         myday = dayOfMonth;
@@ -164,28 +231,23 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         this.item = item;
-        Date date = new Date();
-        long timeMilli = date.getTime();
         switch (item.getItemId()){
-            case R.id.newgroup:
+            case R.id.newitem:
                 //savedate
-                if(timeMilli >= alarmstart){
-                    Toast.makeText(this, "invalid time", Toast.LENGTH_SHORT).show();
-                }else {
                 saveMassege();
                 setAlarm();
                 return true;
-                }
-
             default:
                 return super.onOptionsItemSelected(item);
 
         }
     }
+
     private void saveMassege() {
         String w=contactname.getText().toString().trim();
         String w1=newmsg.getText().toString().trim();
         String w2=date.getText().toString().trim();
+
         //save it in to db
         Scheduled_list inf=new Scheduled_list(w,w1,w2);
         if (w.isEmpty() || w1.isEmpty() || w2.isEmpty() ){
@@ -201,9 +263,10 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         }
         finish();
     }
+
     public void  setAlarm(){
         //make alarm
-        Intent intent = new Intent(MessageEntry.this, AlarmReciever.class);
+        Intent intent = new Intent(MessageEntry.this,AlarmReciever.class);
         intent.putExtra("notificationid",notificationid);
         intent.putExtra("massege",newmsg.getText().toString());
         intent.putExtra("phone",contactname.getText().toString());

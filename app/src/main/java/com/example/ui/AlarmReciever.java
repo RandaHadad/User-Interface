@@ -5,9 +5,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.telephony.SmsManager;
 import android.widget.Toast;
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -82,8 +82,8 @@ public class AlarmReciever extends BroadcastReceiver {
             // TODO transfer the data from scheduled to logs
             // addNewViewmodellog= ViewModelProviders.of(activity).get( AddNewViewmodelLog.class );
 
-         //            Logs_list Done = new Logs_list(contact,massege);
-         //            addNewViewmodellog.insert(Done);
+            //            Logs_list Done = new Logs_list(contact,massege);
+            //            addNewViewmodellog.insert(Done);
             // TODO delete the data from scheduled
 
         }
