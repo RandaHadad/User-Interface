@@ -195,7 +195,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
 
                 Log.d("MyTag", results.get(0).getDisplayName());
             } else if(resultCode == RESULT_CANCELED){
-                System.out.println("User closed the picker without selecting items.");
+                System.out.println("select a contact");
             }
         }
     }
