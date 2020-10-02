@@ -51,6 +51,8 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
     TextView newmsg;
     TextView contactname;
 
+    String numberforgroups;
+
     private int mID;
     private AddNewViewmodel addNewViewmodel;
     private boolean editMode;
@@ -189,7 +191,7 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
                 String names = results.get(0).getDisplayName();
                 for(int j = 0 ; j<results.size() ; j++){
                     if( j != 0)
-                        names = names+", "+results.get(j).getDisplayName();
+                        names = results.get(j).getPhoneNumbers().get(0).getNumber();
                 }
                 contactname.setText(names);
 
@@ -263,17 +265,20 @@ public class MessageEntry extends AppCompatActivity implements DatePickerDialog.
         }
         finish();
     }
-
     public void  setAlarm(){
         //make alarm
+        if(!results.isEmpty()) {
+            for(int j = 0 ; j<results.size(); j++) {
         Intent intent = new Intent(MessageEntry.this,AlarmReciever.class);
         intent.putExtra("notificationid",notificationid);
         intent.putExtra("massege",newmsg.getText().toString());
-        intent.putExtra("phone",contactname.getText().toString());
+        intent.putExtra("phone",results.get(j).getPhoneNumbers().get(0).getNumber());
 
         final PendingIntent pendingIntent = PendingIntent.getBroadcast(MessageEntry.this, mID ,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP,alarmstart,pendingIntent);
+
+            }}
 
     }
     public void deletAlarm(){
